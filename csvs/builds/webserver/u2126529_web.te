@@ -16,7 +16,7 @@ require {
 	type node_t;
 	type u2126529_web_t;
 	type mysqld_port_t;
-	type user_home_t;
+	#type user_home_t;
 	class capability { chown net_bind_service setgid setuid dac_override };
 	class tcp_socket { bind create listen name_bind node_bind setopt accept read write connect getattr name_connect getopt};
 	#class file { open read };

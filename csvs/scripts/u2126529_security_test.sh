@@ -10,6 +10,8 @@ docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.200 --hostname www.c
 --cap-add=setgid \
 --cap-add=setuid \
 u2126529/csvs2023-web_i.slim
+#enter in web container
+docker exec -e COLUMNS=$COLUMNS -e LINES=$LINES -it u2126529_csvs2023-web_c /bin/bash
 
 
 
@@ -21,6 +23,6 @@ docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cy
 --cap-drop=ALL \
 -v mysql_volume:/var/lib/mysql \
 u2126529/csvs2023-db_i.slim
+#enter in db container
+docker exec -e COLUMNS=$COLUMNS -e LINES=$LINES -it u2126529_csvs2023-db_c /bin/bash
 
-#list 
-docker ps -a
