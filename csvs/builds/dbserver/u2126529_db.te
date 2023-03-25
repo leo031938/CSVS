@@ -15,14 +15,13 @@ require {
 	type u2126529_db_t;
 	type mysqld_port_t;
 	type node_t;
-	#class capability { dac_override net_admin setgid setuid };
 	class tcp_socket { name_bind bind setopt create accept getattr listen read write node_bind};
 }
 #============= u2126529_db_t ==============
 allow u2126529_db_t mysqld_port_t:tcp_socket name_bind;
 allow u2126529_db_t node_t:tcp_socket node_bind;
 allow u2126529_db_t self:tcp_socket { name_bind bind setopt create accept getattr listen read write node_bind};
-#allow u2126529_db_t self:capability { dac_override net_admin setgid setuid };
+
 
 ################# end audit2allow additions ##################
 
