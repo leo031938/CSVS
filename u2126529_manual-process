@@ -1,0 +1,204 @@
+#Env setting manual
+#launch dockerservice
+sudo systemctl start docker.service
+#Env SElinux
+sudo yum install selinux-policy-devel
+sudo nano /usr/lib/systemd/system/docker.service
+
+#   # Modify one line from:
+#   #     ExecStart=/usr/bin/dockerd
+#   # To
+#   #     ExecStart=/usr/bin/dockerd --selinux-enabled
+#   # Save <CTRL> x and respond with y to "Save Changes" and press return to accept the filename.
+#   # Restart docker:
+#     # reload the unit file we have just editted:
+#     sudo systemctl daemon-reload
+#     systemctl restart docker
+#     # confirm docker is running with selinux enabled
+#     docker info | grep -A5 Security
+#     systemctl status docker
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#WEB:
+#SElinux:
+sudo make -f /usr/share/selinux/devel/Makefile u2126529_web.pp
+sudo semodule -i u2126529_web.pp
+sudo semodule -l | grep u2126529_web
+sudo ausearch -m avc --start recent | audit2allow -r
+
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u2126529_csvs2023-web_c \
+--security-opt label:type:u2126529_web_t \
+u2126529/csvs2023-web_i
+
+
+#Seccomp:
+chmod +x u2126529_build-minimal-sycalls-web.sh
+./u2126529_build-minimal-sycalls-web.sh
+
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u2126529_csvs2023-web_c \
+--security-opt label:type:u2126529_web_t \
+--security-opt seccomp:u2126529_web.json u2126529/csvs2023-web_i
+
+
+#Capability
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u2126529_csvs2023-web_c \
+--security-opt label:type:u2126529_web_t \
+--security-opt seccomp:u2126529_web.json \
+--cap-drop=ALL \
+--cap-add=chown \
+--cap-add=net_bind_service \
+--cap-add=setgid \
+--cap-add=setuid \
+--cap-add=dac_override \
+u2126529/csvs2023-web_i
+
+
+#Strip
+#Docker slim
+curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
+
+slim
+
+build --target u2126529/csvs2023-web_i:latest --include-path '/var/lib/nginx/tmp/client_body' --include-path '/usr/share/nginx/html'  --tag u2126529/csvs2023-web_i.slim
+
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u2126529_csvs2023-web_c \
+--security-opt label:type:u2126529_web_t \
+--security-opt seccomp:u2126529_web.json \
+--cap-drop=ALL \
+--cap-add=chown \
+--cap-add=net_bind_service \
+--cap-add=setgid \
+--cap-add=setuid \
+--cap-add=dac_override \
+u2126529/csvs2023-web_i.slim
+
+#docker export u2126529_csvs2023-web_c | tar -x -C ./
+#diff -r f1/ f2/ > ./re.txt
+
+
+
+
+
+
+
+
+
+
+
+
+#DB:
+#SElinux:
+sudo make -f /usr/share/selinux/devel/Makefile u2126529_db.pp
+sudo semodule -i u2126529_db.pp
+sudo semodule -l | grep u2126529_db
+sudo ausearch -m avc --start recent | audit2allow -r
+
+
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u2126529_csvs2023-db_c \
+--security-opt label:type:u2126529_db_t \
+u2126529/csvs2023-db_i
+
+docker exec -i u2126529_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
+
+
+#Seccomp:
+chmod +x u2126529_build-minimal-sycalls-db.sh
+./u2126529_build-minimal-sycalls-db.sh
+
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u2126529_csvs2023-db_c \
+--security-opt label:type:u2126529_db_t \
+--security-opt seccomp:u2126529_db.json u2126529/csvs2023-db_i 
+
+docker exec -i u2126529_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
+
+#Find the problem
+#docker stats --no-stream u2126529_csvs2023-web_c | grep u2126529 | awk '{print $3}' | sed 's/%//'
+
+
+
+#Capability
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u2126529_csvs2023-db_c \
+--security-opt label:type:u2126529_db_t \
+--security-opt seccomp:u2126529_db.json \
+--cap-drop=ALL \
+u2126529/csvs2023-db_i 
+
+docker exec -i u2126529_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
+
+
+
+#Persistant
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u2126529_csvs2023-db_c \
+--security-opt label:type:u2126529_db_t \
+--security-opt seccomp:u2126529_db.json \
+--cap-drop=ALL \
+-v mysql_volume:/var/lib/mysql \
+u2126529/csvs2023-db_i 
+
+docker exec -i u2126529_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
+
+#Strip
+#Docker slim
+curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
+
+slim
+
+build --target u2126529/csvs2023-db_i:latest --http-probe-off --include-path '/etc/mysql/conf.d' --include-path '/run/mysqld/' --tag u2126529/csvs2023-db_i.slim
+
+#Test
+docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u2126529_csvs2023-db_c \
+--security-opt label:type:u2126529_db_t \
+--security-opt seccomp:u2126529_db.json \
+--cap-drop=ALL \
+-v mysql_volume:/var/lib/mysql \
+u2126529/csvs2023-db_i.slim 
+
+
+
+
+
+
+
+
+
+

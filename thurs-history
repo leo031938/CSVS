@@ -1,0 +1,771 @@
+    1  sudo yum install kernel-headers
+    2  sudo yum install "kernel-devel-uname-r == $(uname -r)"
+    3  sudo yum install gcc make perl
+    4  sudo /sbin/rcvboxadd setup
+    5  sudo yum install gnome-shell-extension-panel-favorites.noarch 
+    6  sudo tee /etc/yum.repos.d/docker-ce.repo <<-'EOF'
+    7  [docker-ce-stable]
+    8  name=Docker CE Stable - x86_64
+    9  baseurl=https://download.docker.com/linux/centos/7/x86_64/stable
+   10  enabled=1
+   11  gpgcheck=1
+   12  gpgkey=https://download.docker.com/linux/centos/gpg
+   13  EOF
+   14  sudo yum makecache fast
+   15  yum list docker-ce
+   16  sudo yum install docker-ce
+   17  systemctl status docker
+   18  sudo usermod --append --groups docker $USER
+   19  sudo systemctl start docker.service
+   20  history
+   21  cat /etc/yum.repos.d/docker-ce.repo
+   22  sudo systemctl status docker
+   23  yum list docker-ce
+   24  docker --version
+   25  sudo systemctl enable docker
+   26  sudo systemctl status docker
+   27  grep csc /wetc/groups
+   28  grep csc /etc/groups
+   29  grep csc /etc/group
+   30  sudo systemctl start docker.service
+   31  systemctl status docker
+   32  sudo iptabes -nvL
+   33  sudo iptables -nvL
+   34  sudo systemctl stop docker.service
+   35  systemctl status docker
+   36  sudo iptables -nvL
+   37  sudo systemctl disable docker.service
+   38  sudo iptables -nvL
+   39  sudo systemctl enable docker
+   40  sudo systemctl start docker.service
+   41  systemctl status docker
+   42  docker info
+   43  docker info | less
+   44  docker --help
+   45  docker search --help
+   46  docker search --filter=is-official=true --no-trunc Centos
+   47  docker search --filter=is-official=true --no-trunc ubuntu
+   48  docker search --filter=is-official=true --no-trunc debian
+   49  docker search --filter=is-official=true --no-trunc mysql
+   50  docker search --filter=is-official=true --no-trunc kali
+   51  docker images
+   52  docker pull centos:7
+   53  docker images
+   54  docker inspect centos:7 | less
+   55  sudo ls /var/lib/docker
+   56  sudo ls /var/lib/docker/image
+   57  sudo ls /var/lib/docker/image/overlay2
+   58  sudo ls /var/lib/docker/image/overlay2/imagedb
+   59  sudo ls /var/lib/docker/image/overlay2/imagedb/content
+   60  sudo ls /var/lib/docker/image/overlay2/imagedb/content/sha256
+   61  docker images
+   62  docker run   --tty   --interactive   --name "BANANA"   centos:7
+   63  docker images
+   64  docker ps -a
+   65  watch -n1 docker ps -a
+   66  ncat localhost 8080
+   67  ncat localhost 8080
+   68  ncst localhost 7777
+   69  ncat localhost 7777
+   70  ncat -4kl --chat 8080
+   71  ncat -4kl --chat 127.0.0.1:8080
+   72  ncat -4kl --chat 127.0.0.1 8080
+   73  ncat -4kl --chat 127.0.0.1 8080 -vv
+   74  ncat -4kl --chat 8080 -vv
+   75  ncat localhost 7777
+   76  ncat --ssl localhost 7773
+   77  docker iamges
+   78  docker images
+   79  docker ps
+   80  docker inspect BANANA | less
+   81  ps -p 9161
+   82  pgrep bash
+   83  docker attach BANAZZZZZZ
+   84  docker attach BANANA
+   85  docker rm BANANA
+   86  docker kill BANANA
+   87  docker images
+   88  docker ps
+   89  docker ps -a
+   90  docker rm BANANA 
+   91  docker ps -a
+   92  docker run -it centos:7
+   93  docker ps -a
+   94  docker rm 973e253921a8
+   95  docker ps -a
+   96  docker run --rm -it centos:7
+   97  mkdir builds
+   98  cd builds
+   99  which ncat
+  100  man ncat
+  101  ncat --listen --keep-open -4 8080
+  102  ncat -4kl --chat 8080
+  103  ls
+  104  tar -xvzf chat.tar.gz 
+  105  cd chat01
+  106  ls
+  107  gedit Dockerfile &
+  108  docker --rm -it centos:7
+  109  docker run --rm -it centos:7
+  110  docker ps -a
+  111  docker build   --tag local/chat_i --tag local/chat_i:0.1
+  112  docker build  . --tag local/chat_i --tag local/chat_i:0.1
+  113  docker inspect local/chat_i:0.1 | less
+  114  docker run --name chat_c --detach --rm -p 7777:6666   local/chat_i:0.1
+  115  docker logs chat_c
+  116  docker ps -a
+  117  docker run --name chat_c --detach -p 7777:6666   local/chat_i:0.1
+  118  docker logs chat_c
+  119  docker build  . --tag local/chat_i --tag local/chat_i:0.1
+  120  docker images
+  121  docker run --name chat_c --detach  -p 7777:6666   local/chat_i:0.1
+  122  docker rm chat_c 
+  123  docker run --name chat_c --detach  -p 7777:6666   local/chat_i:0.1
+  124  docker logs chat_c 
+  125  docker ps
+  126  ncat localhost 7777
+  127  ip a
+  128  ncat localhost 7777
+  129  docker sto[p 
+  130  docker stop chat_c 
+  131  docker start chat_c 
+  132  docker stop chat_c 
+  133  man ncat
+  134  docker build  . --tag local/chat_i --tag local/chat_i:0.1
+  135  docker rm chat_c 
+  136  docker ps -a
+  137  docker run --name chat_c --detach -p 7777:6666   local/chat_i:0.1
+  138  docker logs chat_c 
+  139  ncat localhost 7777
+  140  docker logs chat_c 
+  141  docker kill chat_c 
+  142  docker logs chat_c 
+  143  docker rm chat_c 
+  144  head Dockerfile 
+  145  cd ../chat02
+  146  head Dockerfile 
+  147  docker images
+  148  docker build  . --tag local/chat_i --tag local/chat_i:0.2
+  149  docker images
+  150  docker run --name chat_c --detach --rm -p 7777:8888   local/chat_i:0.2 8888
+  151  docker ps
+  152  docker logs chat_c 
+  153  ncat localhost 7777
+  154  sudo iptables -t nat -nvL 
+  155  cd ../chat03
+  156  gedit Dockerfile 
+  157  head Dockerfile 
+  158  docker build . --tag local/chat_i  --tag local/chat_i:0.3
+  159  docker run --name chat_c -d --rm -p 127.0.0.1:7777:4567 local/chat_i:0.3 4567
+  160  docker kill chat_c 
+  161  docker ps -a
+  162  docker images
+  163  ip a
+  164  ncat localhost 8080
+  165  ncat 10.0.2.15 8080
+  166  ncat localhost 8080
+  167  ncat 10.0.2.15 8080
+  168  docker ps -a
+  169  docker run --name chat_c -d --rm -p 127.0.0.1:7777:4567 local/chat_i:0.3 4567
+  170  docker ps
+  171  ncat localhost 4567
+  172  ncat localhost 7777
+  173  ncat 10.0.2.15 7777
+  174  docker exec --help
+  175  docker exec -it chat_c /bin/bash
+  176  docker kill chat_c 
+  177  docker ps -a
+  178  docker run --name chat_c --detach --rm -p 7777:6666   local/chat_i:0.2
+  179  docker exec -it chat_c /bin/bash
+  180  docker kill chat_c 
+  181  cd ../chat04
+  182  gedit Dockerfile 
+  183  head Dockerfile 
+  184  docker build . --tag local/chat_i  --tag local/chat_i:0.4
+  185  docker run --name chat_c -d --rm -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7777:6666 local/chat_i:0.4
+  186  docker inspect chat_c | less
+  187  docker ps
+  188  sudo ls /var/lib/docker
+  189  sudo ls /var/lib/docker/volumes
+  190  sudo ls /var/lib/docker/volumes/CHAT_LOG_v
+  191  sudo ls /var/lib/docker/volumes/CHAT_LOG_v/_data
+  192  sudo tail -f /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  193  docker kill chat_c 
+  194  sudo tail -f /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  195  docker ps -a
+  196  docker rm crazy_ritchie 
+  197  docker ps -a
+  198  sudo cat /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  199  cd ../chat05
+  200  gedit Dockerfile 
+  201  ls
+  202  ls ssl
+  203  head Dockerfile 
+  204  mv ssl ssl_h
+  205  ls
+  206  ls ssl_h/
+  207  head Dockerfile 
+  208  docker build . --tag local/chatssl_i  --tag local/chatssl_i:0.5
+  209  docker run --name chatssl_c -d -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7773:4443 local/chatssl_i:0.5
+  210  docker ps
+  211  sudo tail -f /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  212  docker exec -it chatssl_c /bin/bash
+  213  docker kill chatssl_c 
+  214  cd ../chat06
+  215  ls
+  216  gedit Dockerfile 
+  217  mv ssl/ ssl_h
+  218  head
+  219  head Dockerfile 
+  220  docker build . --tag local/chatssl_i  --tag local/chatssl_i:0.6
+  221  head Dockerfile 
+  222  docker run --name chatssl_c -d -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7773:4443 local/chatssl_i:0.6
+  223  docker ps -a
+  224  docker rm chatssl_c 
+  225  head Dockerfile 
+  226  docker run --name chatssl_c -d --rm -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7773:4443 local/chatssl_i:0.6
+  227  docker ps
+  228  sudo tail -f /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  229  docker ps -a
+  230  docker stop chatssl_c 
+  231  docker ps -a
+  232  docker create --help
+  233  docker create --name chatssl_c -d -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7773:4443 local/chatssl_i:0.6
+  234  docker create --name chatssl_c -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7773:4443 local/chatssl_i:0.6
+  235  docker ps -a
+  236  docker export --help
+  237  docker export -o /tmp/chatssl06.tar chatssl_c
+  238  history > ../mon-history.txt
+  239  cd ..
+  240  less mon-history.txt 
+  241  dfocker ps -a
+  242  docker ps -a
+  243  docker rm chatssl_c 
+  244  docker images
+  245  id
+  246  uname -n
+  247  id
+  248  cat /proc/sys/user/max_user_namespaces 
+  249  exit
+  250  id
+  251  touch /foo
+  252  exit
+  253   ls -li /proc/$$/ns
+  254   ls -l --color=none /proc/$$/ns
+  255   clear
+  256   sudo unshare --pid --mount-proc --fork /bin/bash
+  257   unshare --user --map-root-user /bin/bash
+  258  man unshare
+  259   unshare --user --map-root-user /bin/bash -c "id"
+  260   unshare --user  /bin/bash
+  261   unshare -U  /bin/bash
+  262   unshare -U  true
+  263   sudo unshare --user --map-root-user /bin/bash
+  264  man unshre
+  265  man unshare
+  266  dmesg 
+  267  cat /proc/sys/user/max_user_namespaces
+  268  sudo sh -c "echo 99 > /proc/sys/user/max_user_namespaces"
+  269  cat /proc/sys/user/max_user_namespaces
+  270   sudo unshare --user --map-root-user /bin/bash
+  271   unshare --user --map-root-user /bin/bash
+  272  clear
+  273  docker ps --help
+  274  docker images --help
+  275  docker inspect --help
+  276  docker info
+  277  docker run --help
+  278  man capabilities
+  279  cat /proc/$$/status
+  280  cat /proc/$$/status | grep Cap
+  281  which ping
+  282  getcaps /usr/bin/ping
+  283  getcap /usr/bin/ping
+  284  sudo /bin/bash
+  285  cat /proc/sys/kernel/cap_last_cap 
+  286  capsh --decode=1
+  287  capsh --decode=2
+  288  capsh --decode=4
+  289  capsh --decode=3
+  290  capsh --decode=f
+  291  for i in {0..37}; do capsh --decode=$(printf "%x\n" $(( 1 << $i )) ); done
+  292  which ping
+  293  getcap /usr/bin/ping
+  294  /usr/bin/ping 8.8.8.8
+  295  cp /usr/bin/ping myping
+  296  sha224sum /usr/bin/ping myping 
+  297  ls -l myping 
+  298  ./myping 8.8.8.8
+  299  sudo setcap cap_net_admin,cap_net_raw+p ./myping
+  300  getcap myping 
+  301  cp /usr/bin/ping myping2
+  302  getcap myping2 
+  303  ./myping 8.8.8.8
+  304  sudo setcap cap_net_admin+p ./myping
+  305  getcap myping
+  306  ./myping 8.8.8.8
+  307  sudo setcap cap_net_raw+p ./myping
+  308  getcap myping
+  309  ./myping 8.8.8.8
+  310  ./myping -R 8.8.8.8
+  311  docker run --rm centos:7 /bin/bash
+  312  docker run --rm -it centos:7 /bin/bash
+  313  cd builds/chat04b
+  314  gedit Dockerfile 
+  315  docker run --name chat_c -d --rm --read-only -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7777:6666 local/chat_i:0.4
+  316  docker ps
+  317  docker logs chat_c 
+  318  ncat localhost 7777
+  319  sudo tail -f /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  320  docker run --name chat_c -d --rm --read-only --tmpfs /tmp     -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7777:6666 local/chat_i:0.4
+  321  docker ps
+  322  ncat localhost 7777
+  323  docker kill chat_c 
+  324  docker run --name chat_c -d --rm --read-only --tmpfs /var     -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7777:6666 local/chat_i:0.4
+  325  sudo tail -f /var/lib/docker/volumes/CHAT_LOG_v/_data/chat.log
+  326  docker kill chat_c 
+  327  docker run --name chat_c -d --rm --read-only --tmpfs /var     -v CHAT_LOG_v:/var/log/chat/ -p 127.0.0.1:7777:6666 --user root local/chat_i:0.4
+  328  docker ps
+  329  dockkr inspect hardcore_chebyshev | grep -i pid
+  330  docker inspect hardcore_chebyshev | grep -i pid
+  331  getpcaps 7423
+  332  getpcaps 7423 | tr "," "\n"
+  333  getpcaps 7423 2>&1 | tr "," "\n"
+  334  ls -l /proc/$$/ns
+  335  clear
+  336  ls -l --color=none /proc/$$/ns
+  337  clear
+  338  uname -n
+  339  sudo unshare --uts /bin/bash
+  340  uname -n
+  341  sudo ip netns add myAAA
+  342  ls /var/run/netns
+  343  sudo ip netns add myBBB
+  344  sudo ip netns add myRRR
+  345  ls /var/run/netns
+  346  ip netns exec myAAA /bin/bash
+  347  sudo ip netns exec myAAA /bin/bash
+  348  sudo ip netns exec lanXXX brctl addbr brXXX
+  349  sudo ip netns add lanXXX
+  350  sudo ip netns add lanYYY
+  351  ls /var/run/netns
+  352  sudo ip link add myEthA0 type veth peer name myEthAX0
+  353  ip a
+  354  sudo ip link add myEthR1 type veth peer name myEthRX1
+  355  sudo ip link add myEthR2 type veth peer name myEthRY2
+  356  sudo ip link add myEthB0 type veth peer name myEthBY0
+  357  ip a
+  358  sudo ip netns exec myAAA /bin/bash
+  359  ip netns identify
+  360  sudo ip link set myEthA0 netns myAAA
+  361  sudo ip netns exec myAAA /bin/bash
+  362  sudo ip link set myEthR1 netns myRRR
+  363  sudo ip link set myEthR2 netns myRRR
+  364  sudo ip netns exec myRRR /bin/bash
+  365  sudo ip link set myEthAX0 netns lanXXX
+  366  sudo ip link set myEthRX1 netns lanXXX
+  367  sudo ip link set myEthRY2 netns lanYYY
+  368  sudo ip link set myEthBY0 netns lanYYY
+  369  ip a
+  370  sudo ip link set myEthB0 netns myBBB
+  371  ip a
+  372  sudo ip netns exec lanXXX brctl addbr brXXX
+  373  sudo ip netns exec lanYYY brctl addbr brYYY
+  374  sudo ip netns exec lanXXX brctl addif brXXX myEthAX0
+  375  sudo ip netns exec lanXXX brctl addif brXXX myEthRX1
+  376  sudo ip netns exec lanYYY brctl addif brYYY myEthBY0
+  377  sudo ip netns exec lanYYY brctl addif brYYY myEthRY2
+  378  sudo ip netns exec /bin/bash
+  379  sudo ip netns exec myXXX /bin/bash
+  380  sudo ip netns exec lanXXX /bin/bash
+  381  sudo ip netns exec lanXXX ip link set dev brXXX up
+  382  sudo ip netns exec lanYYY ip link set dev brYYY up
+  383  sudo ip netns exec lanXXX ip link set dev myEthAX0 up
+  384  sudo ip netns exec lanXXX ip link set dev myEthRX1 up
+  385  sudo ip netns exec lanYYY ip link set dev myEthBY0 up
+  386  sudo ip netns exec lanYYY ip link set dev myEthRY2 up
+  387  sudo ip netns exec myAAA ifconfig myEthA0 172.22.22.2/29
+  388  sudo ip netns exec myRRR ifconfig myEthR1 172.22.22.1/29
+  389  sudo ip netns exec myRRR ifconfig myEthR2 10.0.0.1/27
+  390  sudo ip netns exec myBBB ifconfig myEthB0 10.0.0.2/27
+  391  sudo ip netns exec myRRR /bin/bash
+  392  sudo ip netns exec myAAA route add default gw 172.22.22.1
+  393  sudo ip netns exec myBBB route add default gw 10.0.0.1
+  394  sudo ip netns exec myRRR tcpdump -w ./RRR-dump01.pcap -s0 -c10 -i myEthR1 &
+  395  sudo ip netns exec myAAA ping -c5 10.0.0.2
+  396  sudo ip netns exec myAAA /bin/bash
+  397  ip a
+  398  sudo ip netns del myAAA
+  399  ip a
+  400  ls /var/run/netns
+  401  sudo ip netns exec myRRR /bin/bash
+  402  sudo ip netns exec lanXXX /bin/bash
+  403  ls
+  404  rm myping myping2 
+  405  cd builds
+  406  ls
+  407  ls names*
+  408  ls namespace-s*
+  409  chmod +x namespace-s*
+  410  ls namespace-s*
+  411  ./namespace-stop.sh 
+  412  ls /var/run/netns
+  413  cat /dev/urandom | base64
+  414  dd if=/dev/urandom bs=128 | base64
+  415  dd if=/dev/urandom bs=128 count=1 | base64
+  416  dd if=/dev/urandom bs=12 count=1 | base64
+  417  openssl --version
+  418  openssl rand hex
+  419  openssl rand -hex 16
+  420  openssl rand -base64 16
+  421  sudo unshare --pid --mount-proc --fork /bin/bash
+  422  unshare --user --map-root-user /bin/bash
+  423  cat /proc/sys/user/max_user_namespaces
+  424  sudo sh -c "echo 99 > /proc/sys/user/max_user_namespaces"
+  425  unshare --user --map-root-user /bin/bash
+  426  docker pull busybox
+  427  docker images
+  428  docker run -d --rm --name lo --cpuset=0 --cpu-shares=25 busybox md5sum /dev/urandom
+  429  docker run -d --rm --name lo --cpuset-cpus=0 --cpu-shares=25 busybox md5sum /dev/urandom
+  430  docker ps
+  431  top
+  432  docker run -d --rm --name hi --cpuset-cpus=0 --cpu-shares=75 busybox sha1sum /dev/urandom
+  433  top
+  434  docker kill lo hi
+  435  docker ps -a
+  436  ncat localhost 7777
+  437  docker exec -it chat_c /bin/bash
+  438  docker kill chat_c 
+  439  docker exec -it chat_c /bin/bash
+  440  ncat localhost 7777
+  441  docker exec -it chat_c /bin/bash
+  442  rm chat04b/Dockerfile 
+  443  rmdir chat04b
+  444  cd chat02-sel/
+  445  cp ../chat02/Dockerfile .  
+  446  ls
+  447  sestatus
+  448  getenforce
+  449  ls -l
+  450  ls -lZ
+  451  pwd
+  452  ls -lZ /
+  453  cat /usr/share/selinux/devel/include/contrib/virt.if
+  454  sudo yum install selinux-policy-devel
+  455  cat /usr/share/selinux/devel/include/contrib/virt.if
+  456  cat /usr/lib/systemd/system/docker.service
+  457  sudo nano /usr/lib/systemd/system/docker.service
+  458  cat /usr/lib/systemd/system/docker.service
+  459  sudo systemctl daemon-reload
+  460  systemctl status docker
+  461  systemctl restart docker
+  462  systemctl status docker
+  463  docker info | grep -A5 Security
+  464  ls
+  465  sudo make -f /usr/share/selinux/devel/Makefile docker_chat.pp
+  466  ls
+  467  sudo semodule -l 
+  468  sudo semodule -l | wc
+  469  sudo semodule -l | grep chat
+  470  sudo semodule -l | grep docker
+  471  sudo semodule -l | grep zebra
+  472  sudo semodule -i docker_chat.pp
+  473  sudo semodule -l | grep docker
+  474  docker run --name chat_c -d --rm -p 127.0.0.1:7777:6666  --security-opt label:type:docker_chat_t local/chat_i:0.2
+  475  docker ps
+  476  sudo cat /var/log/audit/audit.log
+  477  sudo cat /var/log/audit/audit.log | grep avc
+  478  sudo ausearch -m avc --start recent | audit2allow
+  479  sudo make -f /usr/share/selinux/devel/Makefile docker_chat.pp
+  480  sudo ausearch -m avc --start recent | audit2allow -r
+  481  sudo ausearch -m avc  | audit2allow -r
+  482  sudo make -f /usr/share/selinux/devel/Makefile docker_chat.pp
+  483  sudo semodule -i docker_chat.pp
+  484  sudo semodule -l | grep docker_chat
+  485  docker kill chat_c 
+  486  docker run --name chat_c -d --rm -p 127.0.0.1:7777:6666  --security-opt label:type:docker_chat_t local/chat_i:0.2
+  487  docker kill chat_c 
+  488  history > tues-history
+  489  cat tues-history 
+  490  ncat localhost 7777
+  491  sudo semanage dontaudit off
+  492  docker run --name chat_c -d --rm -p 127.0.0.1:7777:6666  --security-opt label:type:docker_chat_t local/chat_i:0.2
+  493  docker logs chat_c 
+  494  ncat localhost 7777
+  495  docker stop
+  496  docker stop chat_c 
+  497  sudo ausearch -m avc --start recent | audit2allow -r
+  498  ls
+  499  cd builds/chat02-sel/
+  500  ls
+  501  sudo make -f /usr/share/selinux/devel/Makefile docker_chat.pp
+  502  sudo semodule -i docker_chat.pp
+  503  sudo semodule -l | grep docker_chat
+  504  docker ps -a
+  505  docker run --name chat_c -d --rm -p 127.0.0.1:7777:6666  --security-opt label:type:docker_chat_t local/chat_i:0.2
+  506  ncat localhost 7777
+  507  sudo make -f /usr/share/selinux/devel/Makefile docker_chat.pp
+  508  sudo semodule -i docker_chat.pp
+  509  sudo semodule -l | grep docker_chat
+  510  docker kill chat_c 
+  511  getenforce
+  512  docker run --name chat_c -d --rm -p 127.0.0.1:7777:6666  --security-opt label:type:docker_chat_t local/chat_i:0.2
+  513  docker ps
+  514  docker logs 
+  515  docker logs chat_c 
+  516  ncat localhost 7777
+  517  docker ps
+  518  ncat localhost 7777
+  519  docker logs chat_c 
+  520  man semanage
+  521  sudo setenforce 0
+  522  getenforce
+  523  ncat localhost 7777
+  524  sudo semanage dontaudit off
+  525  ncat localhost 7777
+  526  sudo setenforce 1
+  527  getenforce
+  528  ncat localhost 7777
+  529  sudo cat /var/log/audit/audit.log
+  530  sudo cat /var/log/audit/audit.log |grep avc
+  531  sudo ausearch -m avc --start recent | audit2allow -r
+  532  sudo make -f /usr/share/selinux/devel/Makefile docker_chat.pp
+  533  sudo semodule -i docker_chat.pp
+  534  sudo semodule -l | grep docker_chat
+  535  getenforce
+  536  docker ps
+  537  ncat localhost 7777
+  538  man semanage
+  539  man semanage-permissive
+  540  sudo semanage permissive -l
+  541  semanage permissive -a docker_chat
+  542  sudo semanage permissive -a docker_chat
+  543  man semanage-permissive
+  544  semanage-permissive --help
+  545  /sbin/semanage-permissive --help
+  546  semanage permissive --help
+  547  semanage  --help
+  548  sudo semanage permissive -a docker_chat
+  549  sudo semanage -l
+  550  sudo semodule -l
+  551  sudo semanage permissive -l
+  552  sudo semanage permissive -a docker_chat
+  553  sudo semanage permissive -a docker_chat_t
+  554  sudo semanage permissive -l
+  555  sudo semanage permissive --help
+  556  man syscalls
+  557  cd ..
+  558  mkdir chat02-strace
+  559  cd chat02-strace
+  560  gedit deny-chmod.json &
+  561  docker run --rm -it --security-opt seccomp:deny-chmod.json busybox chmod 640 /etc/resol.conf
+  562  docker run --rm -it --security-opt seccomp:deny-chmod.json busybox chmod 640 /etc/resolv.conf
+  563  docker run --rm -it  busybox chmod 640 /etc/resolv.conf
+  564  docker run --rm -it --security-opt seccomp:deny-chmod.json centos:7 chmod 640 /etc/resolv.conf
+  565  man syscalls
+  566  docker run --rm -it --security-opt seccomp:deny-chmod-v2.json centos:7 chmod 640 /etc/resolv.conf
+  567  strace ncat -4kl --chat 6666
+  568  strace ncat -4kl --chat 6666 | tee ncat-trace-out
+  569  strace -o ncat-trace-02 ncat -4kl --chat 6666 
+  570  cat ncat-trace-02 | cut -f1 -d"("
+  571  cat ncat-trace-02 | cut -f1 -d"(" | sort -u
+  572  cat ncat-trace-02 | cut -f1 -d"(" | sort -u | grep -v "+++" | grep -v ---
+  573  cat ncat-trace-02 | cut -f1 -d"(" | sort -u | grep -v "+++" | grep -v "---"
+  574  cat ncat-trace-02 | cut -f1 -d"(" | sort -u | grep -v '+++' | grep -v '---'
+  575  cat ncat-trace-02 | cut -f1 -d"(" | sort -u
+  576  cat ncat-trace-02 | cut -f1 -d"(" | sort -u | wc
+  577  head Dockerfile 
+  578  docker build --tag local/chat-straced_i  --tag local/chat-straced_i:0.2 .
+  579  docker images
+  580  mkdir output_h
+  581  echo $PWD
+  582  docker run --name chat_c -dit --rm -p 7777:6666 -v $PWD/output_h:/output_c:rw --cap-add=SYS_PTRACE local/chat-straced_i:0.2 6666
+  583  docker kill chat_c 
+  584  docker run --name chat_c -dit --rm -p 7777:6666 -v $PWD/output_h:/output_c:rw --cap-add=SYS_PTRACE local/chat-straced_i:0.2 6666
+  585  docker ps
+  586  docker run --name chat_c -dit  -p 7777:6666 -v $PWD/output_h:/output_c:rw --cap-add=SYS_PTRACE local/chat-straced_i:0.2 6666
+  587  docker logs chat_c 
+  588  sudo setenforce 0
+  589  docker rm chat_c 
+  590  getenforce
+  591  docker run --name chat_c -dit  -p 7777:6666 -v $PWD/output_h:/output_c:rw --cap-add=SYS_PTRACE local/chat-straced_i:0.2 6666
+  592  docker ps
+  593  tail -f output_h/ncat-trace.8 
+  594  docker kill chat_c 
+  595  cat ncat-trace-02 | cut -f1 -d"(" | sort -u
+  596  cat ncat-trace-02 | cut -f1 -d"(" | sort -u | wc
+  597  true
+  598  docker run --rm -d busybox true
+  599  ls
+  600  chmod +x build-minimal-sycalls.sh 
+  601  ./build-minimal-sycalls.sh 
+  602  cat list-of-min-syscalls | sed 's/^/"/' | sed 's/$/",/'
+  603  docker run --rm -d --security-opt seccomp:hack-min.json busybox true
+  604  docker run --rm -d --security-opt seccomp:revised-minimal.json busybox true
+  605  cd ../strace
+  606  ls
+  607  tar -xvzf stracing-container.tar.gz 
+  608  cd ..
+  609  ls
+  610  cd strace
+  611  ls
+  612  tar -xvzf chat06-straced.tar.gz 
+  613  cd ../chat02-strace/
+  614  ls
+  615  ncat localhost 6666
+  616  ncat localhost 7777
+  617  ls /bin
+  618  ncat localhost 6666
+  619  ncat localhost 7777
+  620  cd builds
+  621  history > wed-history
+  622  docker images
+  623  cd builds/chat02-strace/
+  624  ls
+  625  docker run  -it --entrypoint /bin/bash -p 7777:6666 --name chat_c local/chat-straced_i:0.2
+  626  docker rm chat_c 
+  627  docker run  -it --entrypoint /bin/bash -p 7777:6666 --name chat_c local/chat-straced_i:0.2
+  628  docker rm chat_c 
+  629  docker run  -it --entrypoint /bin/bash -p 7777:6666 --name chat_c local/chat-straced_i:0.2
+  630  docker rm chat_c 
+  631  docker run  -it --entrypoint /bin/bash -p 7777:6666 -v $PWD/output_h:output_c --name chat_c local/chat-straced_i:0.2
+  632  docker run  -it --entrypoint /bin/bash -p 7777:6666 -v $PWD/output_h:/output_c --name chat_c local/chat-straced_i:0.2
+  633  docker rm chat_c 
+  634  docker run  -it --entrypoint /bin/bash -p 7777:6666 -v $PWD/output_h:/output_c:Z --name chat_c local/chat-straced_i:0.2
+  635  docker rm chat_c 
+  636  docker run  -it --entrypoint /bin/bash -p 7777:6666 -v $PWD/output_h:/output_c:z --name chat_c local/chat-straced_i:0.2
+  637  docker rm chat_c 
+  638  docker run  -it --entrypoint /bin/bash -p 7777:6666 -v $PWD/output_h:/output_c --name chat_c local/chatssl_i:0.6
+  639  man chcon
+  640  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c  --entrypoint /bin/bash local/chat-straced_i:0.2
+  641  docker rm chat_c 
+  642  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c  --entrypoint /bin/bash local/chat-straced_i:0.2
+  643  docker rm chat_c 
+  644  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c  --entrypoint /bin/bash local/chat-straced_i:0.2
+  645  docker start chat_c 
+  646  docker stop chat_c
+  647  docker start --help
+  648  docker start -i chat_c 
+  649  docker rm chat_c 
+  650  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c:z  --entrypoint /bin/bash local/chat-straced_i:0.2
+  651  docker rm chat_c 
+  652  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c:rwz  --entrypoint /bin/bash local/chat-straced_i:0.2
+  653  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c:rw,z  --entrypoint /bin/bash local/chat-straced_i:0.2
+  654  docker rm chat_c 
+  655  docker run --name chat_c -it  -p 7777:6666 -v $PWD/output_h:/output_c:rw,Z  --entrypoint /bin/bash local/chat-straced_i:0.2
+  656  docker rm chat_c 
+  657  docker images
+  658  cd ../chat02-strip/
+  659  ls
+  660  chmod +x str*
+  661  ls
+  662  cp ../chat02/Dockerfile .
+  663  id -u
+  664  ls 
+  665  time ./strip-cmd 
+  666  docker images
+  667  docker run --name chat_c --detach --rm -p 7777:6666 local/chat-stripped_i:0.2
+  668  docker logs
+  669  docker logs chat_c 
+  670  docker ps
+  671  ncat localhost 7777
+  672  docker ps
+  673  cd ../chat02-strace/
+  674  ls
+  675  less output_h/ncat-trace.8 
+  676  man strace
+  677  cd ../chat02-strip/
+  678  ls
+  679  time ./strip-cmd 
+  680  ls
+  681  cd tmp-build-base-6940/
+  682  ls -l
+  683  cd export_h/
+  684  ls -lZ
+  685  cd ..
+  686  time ./strip-cmd 
+  687  cd ..
+  688  time ./strip-cmd 
+  689  cd ..
+  690  ls
+  691  tar -xvzf registry-2022-02-17.tar.gz 
+  692  cd registry/
+  693  ls
+  694  gedit run-basic-registry &
+  695  docker run -d   -p 127.0.0.1:5001:5000   -v insecure_registry_v:/var/lib/registry:z   --name insecure_registry_c   registry:2
+  696  docker ps
+  697  docker kill chat_c 
+  698  docker pull busybox
+  699  docker ps | grep busy
+  700  docker images | grep busy
+  701  docker tag busybox localhost:5001/busybox_i
+  702  docker images | grep busy
+  703  docker push localhost:5001/busybox_i
+  704  sudo ls /var/lib/docker/volumes/insecure_registry_v/_data
+  705  sudo ls /var/lib/docker/volumes/insecure_registry_v/_data/docker/registry/v2/repositories
+  706  sudo ls -lZ /var/lib/docker/volumes/insecure_registry_v/_data/docker/registry/v2/repositories
+  707  docker rmi localhost:5001/busybox_i
+  708  docker images | grep busy
+  709  docker pull localhost:5001/busybox_i
+  710  docker images | grep busy
+  711  cat /etc/hosts
+  712  sudo sed -i 's/\(127.0.0.1.*\)/\1 registry.cyber.test/' /etc/hosts
+  713  cat /etc/hosts
+  714  openssl x509 -noout -text -in certs_h/domain.crt
+  715  sudo mkdir -p /etc/docker/certs.d/registry.cyber.test:5002/
+  716  sudo cp certs_h/domain.crt /etc/docker/certs.d/registry.cyber.test:5002/
+  717  docker run -d   --name secure_registry_c   -v "$(pwd)"/certs_h:/certs_c:ro,z   -v secure_registry_v:/var/lib/registry:rw,z   -e REGISTRY_HTTP_ADDR=0.0.0.0:5000   -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs_c/domain.crt   -e REGISTRY_HTTP_TLS_KEY=/certs_c/domain.key   -p 127.0.0.1:5002:5000   registry:2
+  718  docker images
+  719  docker ps
+  720  docker pull busybox
+  721  docker tag busybox registry.cyber.test:5002/busybox_i
+  722  docker images | grep busy
+  723  docker push registry.cyber.test:5002/busybox_i
+  724  docker rmi registry.cyber.test:5002/busybox_i
+  725  docker images | grep busy
+  726  docker pull registry.cyber.test:5002/busybox_i
+  727  docker images | grep busy
+  728  docker build -t local/custom-registry_i -t local/custom-registry_i:2 -t local/custom-registry_i:2.1 .
+  729  docker images | grep reg
+  730  docker kill secure_registry_c 
+  731  docker rm secure_registry_c 
+  732  docker run -d   --name secure_registry_c   -v registry-certificates_v:/certs_c:ro,z   -v secure_registry_v:/var/lib/registry:rw,z   -p 127.0.0.1:5002:5000   local/custom-registry_i:2
+  733  docker ps
+  734  tar -C certs_h -cf - . | docker run --rm -i -v registry-certificates_v:/certs_c:z centos:7 tar -C /certs_c -xvf -
+  735  docker rm secure_registry_c 
+  736  docker run -d   --name secure_registry_c   -v registry-certificates_v:/certs_c:ro,z   -v secure_registry_v:/var/lib/registry:rw,z   -p 127.0.0.1:5002:5000   local/custom-registry_i:2
+  737  docker ps
+  738  docker images
+  739  docker push registry.cyber.test:5002/busybox_i
+  740  docker trust key generate u1234567-cyber-test
+  741  ls ~/.docker/trust/private/
+  742  cd ..
+  743  tar -cvzf 2023-02-06.csvs.rc1.tar.gz 
+  744  tar -xvzf 2023-02-06.csvs.rc1.tar.gz 
+  745  cd 2023-02-06.csvs.rc1/
+  746  ls
+  747  gedit README 
+  748  docker network create --subnet=203.0.113.0/24 u1234567/csvs2023_n
+  749  docker network --help
+  750  docker network ls
+  751  cd dbserver/
+  752  ls
+  753  docker build . -t u1234567/csvs2023-db_i
+  754  docker run -d --net u1234567/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u1234567_csvs2023-db_c u1234567/csvs2023-db_i
+  755  docker ps
+  756  docker kill secure_registry_c insecure_registry_c
+  757  docker ps
+  758  docker exec -i u1234567_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
+  759  docker exec --help
+  760  docker exec -it u1234567_csvs2023-db_c /bin/bash
+  761  cd ../webserver/
+  762  docker build . u1234567/csvs2023-web_i
+  763  docker build . -t u1234567/csvs2023-web_i
+  764  getenforce
+  765  setenforce 0
+  766  sudo setenforce 0
+  767  docker run -d --net u1234567/csvs2023_n --ip 203.0.113.200 --hostname www.cyber23.test --add-host db.cyber23.test:203.0.113.201 -p 80:80 --name u1234567_csvs2023-web_c u1234567/csvs2023-web_i
+  768  docker ps
+  769  docker kill u1234567_csvs2023-web_c u1234567_csvs2023-db_c 
+  770  cd ../..
+  771  history > ../thurs-history
