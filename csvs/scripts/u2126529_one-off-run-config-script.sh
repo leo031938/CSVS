@@ -3,13 +3,13 @@ docker network create --subnet=203.0.113.0/24 u2126529/csvs2023_n
 
 #db persistent
 #Create volume for mysql
-docker volume create mysql_vol
+docker volume create mysql_volume
 
 
 #Run dbserver and insert database and use volume
 cd ../builds/dbserver
 docker run -d --rm --net u2126529/csvs2023_n --ip 203.0.113.201 --hostname db.cyber23.test -e MYSQL_ROOT_PASSWORD="CorrectHorseBatteryStaple" -e MYSQL_DATABASE="csvs23db" --name u2126529_csvs2023-db_c \
--v mysql_vol:/var/lib/mysql \
+-v mysql_volume:/var/lib/mysql \
 u2126529/csvs2023-db_i
 
 #Wait for container up
