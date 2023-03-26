@@ -18,6 +18,9 @@ sleep 10s
 #Insert database
 docker exec -i u2126529_csvs2023-db_c mysql -uroot -pCorrectHorseBatteryStaple < sqlconfig/csvs23db.sql
 
+#Wait for container insert
+sleep 5s
+
 #Kill container
 docker kill u2126529_csvs2023-db_c
 
